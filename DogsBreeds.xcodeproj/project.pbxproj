@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0C26527F2E84BA5D002C2000 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 0C26527E2E84BA5D002C2000 /* Networking */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0CA3E8EC2E84501F00A656D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -33,7 +37,7 @@
 		0CA3E8FD2E84501F00A656D1 /* Exceptions for "DogsBreeds" folder in "DogsBreeds" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Start/Info.plist,
 			);
 			target = 0CA3E8D42E84501600A656D1 /* DogsBreeds */;
 		};
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C26527F2E84BA5D002C2000 /* Networking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = DogsBreeds;
 			packageProductDependencies = (
+				0C26527E2E84BA5D002C2000 /* Networking */,
 			);
 			productName = DogsBreeds;
 			productReference = 0CA3E8D52E84501600A656D1 /* DogsBreeds.app */;
@@ -191,6 +197,7 @@
 					};
 					0CA3E8EA2E84501F00A656D1 = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 						TestTargetID = 0CA3E8D42E84501600A656D1;
 					};
 					0CA3E8F42E84501F00A656D1 = {
@@ -208,6 +215,9 @@
 			);
 			mainGroup = 0CA3E8CC2E84501600A656D1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0C26527D2E84BA5D002C2000 /* XCLocalSwiftPackageReference "Networking" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0CA3E8D62E84501600A656D1 /* Products */;
 			projectDirPath = "";
@@ -291,7 +301,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L5C36X97NN;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DogsBreeds/Info.plist;
+				INFOPLIST_FILE = DogsBreeds/Start/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -318,7 +328,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L5C36X97NN;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DogsBreeds/Info.plist;
+				INFOPLIST_FILE = DogsBreeds/Start/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -459,6 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L5C36X97NN;
@@ -468,6 +479,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kumadev.DogsBreedsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogsBreeds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogsBreeds";
@@ -478,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L5C36X97NN;
@@ -567,6 +580,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0C26527D2E84BA5D002C2000 /* XCLocalSwiftPackageReference "Networking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Networking;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C26527E2E84BA5D002C2000 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Networking;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0CA3E8CD2E84501600A656D1 /* Project object */;
 }
