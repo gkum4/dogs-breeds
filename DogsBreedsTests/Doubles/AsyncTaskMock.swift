@@ -10,5 +10,7 @@ final class AsyncTaskMock: AsyncTaskProtocol {
         for task in tasks {
             await task()
         }
+        
+        tasks = []
     }
 }

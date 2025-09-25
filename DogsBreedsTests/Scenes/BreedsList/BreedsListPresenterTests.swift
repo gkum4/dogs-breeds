@@ -2,9 +2,15 @@
 import Testing
 
 private final class BreedsListCoordinatorSpy: BreedsListCoordinating {
-    enum Message: Equatable {}
+    enum Message: Equatable {
+        case goToBreedDetails
+    }
     
     private(set) var messages: [Message] = []
+    
+    func goToBreedDetails(breedName: String) {
+        messages.append(.goToBreedDetails)
+    }
 }
 
 private final class BreedsListDisplayerSpy: BreedsListDisplaying {
@@ -99,5 +105,14 @@ struct BreedsListPresenterTests {
         args.sut.presentErrorState(for: .cancelled)
         
         #expect(args.displayerSpy.messages.first != args.displayerSpy.messages.last)
+    }
+    
+    @Test
+    func presentBreedDetails_ShouldGoToBreedDetails() {
+        let args = makeSUT()
+        
+        args.sut.presentBreedDetails(with: "Akita")
+        
+        #expect(args.coordinatorSpy.messages == [.goToBreedDetails])
     }
 }

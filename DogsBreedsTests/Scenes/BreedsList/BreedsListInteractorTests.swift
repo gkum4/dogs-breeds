@@ -8,6 +8,7 @@ private final class BreedsListPresenterSpy: BreedsListPresenting {
         case stopLoading
         case presentBreedsList
         case presentErrorState
+        case presentBreedDetails
     }
     
     private(set) var messages: [Message] = []
@@ -26,6 +27,10 @@ private final class BreedsListPresenterSpy: BreedsListPresenting {
     
     func presentErrorState(for error: Networking.ApiError) async {
         messages.append(.presentErrorState)
+    }
+    
+    func presentBreedDetails(with breedName: String) async {
+        messages.append(.presentBreedDetails)
     }
 }
 
@@ -87,6 +92,16 @@ struct BreedsListInteractorTests {
             .presentErrorState,
             .stopLoading
         ])
+    }
+    
+    @Test
+    func tappedOnListItem_ShouldPresentBreedDetails() async {
+        let args = makeSUT()
+        
+        args.sut.tappedOnListItem(breedName: "Akita")
+        await args.asyncTaskMock.executeAllTasks()
+        
+        #expect(args.presenterSpy.messages == [.presentBreedDetails])
     }
 }
 
