@@ -6,12 +6,12 @@ protocol BreedsListInteracting {
 }
 
 final class BreedsListInteractor {
-    private let presenter: BreedsListPresenter
-    private let service: BreedsListService
+    private let presenter: BreedsListPresenting
+    private let service: BreedsListServicing
     private let asyncTask: AsyncTaskProtocol
     
-    init(presenter: BreedsListPresenter,
-         service: BreedsListService,
+    init(presenter: BreedsListPresenting,
+         service: BreedsListServicing,
          asyncTask: AsyncTaskProtocol = AsyncTask()) {
         self.presenter = presenter
         self.service = service
@@ -39,5 +39,3 @@ extension BreedsListInteractor: BreedsListInteracting {
         }
     }
 }
-
-private extension BreedsListInteractor {}

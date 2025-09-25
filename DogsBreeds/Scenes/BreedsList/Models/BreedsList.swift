@@ -20,6 +20,13 @@ struct BreedsList: Decodable, Equatable {
                   subBreeds: try nestedContainer.decode([String].self, forKey: $0))
         }
     }
+    
+    #if DEBUG
+    init(breeds: [BreedListItem], status: String) {
+        self.breeds = breeds
+        self.status = status
+    }
+    #endif
 }
 
 extension BreedsList {
