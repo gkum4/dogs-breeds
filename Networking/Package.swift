@@ -9,9 +9,11 @@ let package = Package(
         .macOS(.v12), .iOS(.v13), .tvOS(.v13)
     ],
     products: [
-        .library(name: "Networking", targets: ["Networking"])
+        .library(name: "Networking", targets: ["Networking"]),
+        .library(name: "NetworkingTesting", targets: ["NetworkingTesting"])
     ],
     targets: [
-        .target(name: "Networking")
+        .target(name: "Networking"),
+        .target(name: "NetworkingTesting", dependencies: ["Networking"])
     ]
 )
