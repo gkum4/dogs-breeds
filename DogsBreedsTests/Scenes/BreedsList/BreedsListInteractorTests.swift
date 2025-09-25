@@ -29,7 +29,7 @@ private final class BreedsListPresenterSpy: BreedsListPresenting {
         messages.append(.presentErrorState)
     }
     
-    func presentBreedDetails(with breedName: String) async {
+    func presentBreedDetails(for breed: DogsBreeds.BreedsList.BreedListItem) async {
         messages.append(.presentBreedDetails)
     }
 }
@@ -98,7 +98,7 @@ struct BreedsListInteractorTests {
     func tappedOnListItem_ShouldPresentBreedDetails() async {
         let args = makeSUT()
         
-        args.sut.tappedOnListItem(breedName: "Akita")
+        args.sut.tappedOnListItem(breed: .fixture())
         await args.asyncTaskMock.executeAllTasks()
         
         #expect(args.presenterSpy.messages == [.presentBreedDetails])

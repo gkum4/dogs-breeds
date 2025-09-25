@@ -1,12 +1,12 @@
 import UIKit
 
 enum BreedDetailsFactory {
-    static func make(breedName: String) -> UIViewController {
+    static func make(breed: BreedsList.BreedListItem) -> UIViewController {
         let presenter = BreedDetailsPresenter()
         let service = BreedDetailsService()
         let interactor = BreedDetailsInteractor(presenter: presenter,
                                                 service: service,
-                                                breedName: breedName)
+                                                breed: breed)
         let viewController = BreedDetailsViewController(interactor: interactor)
         
         presenter.displayer = viewController

@@ -85,7 +85,7 @@ extension BreedsListViewController: UITableViewDataSource {
 
 extension BreedsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let breedName = breedsList[indexPath.row].name
-        interactor.tappedOnListItem(breedName: breedName)
+        let breed = breedsList[indexPath.row]
+        interactor.tappedOnListItem(breed: breed)
     }
 }

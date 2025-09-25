@@ -1,7 +1,7 @@
 import UIKit
 
 protocol BreedsListCoordinating {
-    func goToBreedDetails(breedName: String)
+    func goToBreedDetails(breed: BreedsList.BreedListItem)
 }
 
 final class BreedsListCoordinator {
@@ -9,8 +9,8 @@ final class BreedsListCoordinator {
 }
 
 extension BreedsListCoordinator: BreedsListCoordinating {
-    func goToBreedDetails(breedName: String) {
-        let vc = BreedDetailsFactory.make(breedName: breedName)
+    func goToBreedDetails(breed: BreedsList.BreedListItem) {
+        let vc = BreedDetailsFactory.make(breed: breed)
         viewController?.navigationController?.show(vc, sender: self)
     }
 }

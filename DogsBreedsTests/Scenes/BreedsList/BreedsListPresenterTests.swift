@@ -8,7 +8,7 @@ private final class BreedsListCoordinatorSpy: BreedsListCoordinating {
     
     private(set) var messages: [Message] = []
     
-    func goToBreedDetails(breedName: String) {
+    func goToBreedDetails(breed: DogsBreeds.BreedsList.BreedListItem) {
         messages.append(.goToBreedDetails)
     }
 }
@@ -111,7 +111,7 @@ struct BreedsListPresenterTests {
     func presentBreedDetails_ShouldGoToBreedDetails() {
         let args = makeSUT()
         
-        args.sut.presentBreedDetails(with: "Akita")
+        args.sut.presentBreedDetails(for: .fixture())
         
         #expect(args.coordinatorSpy.messages == [.goToBreedDetails])
     }

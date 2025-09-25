@@ -3,7 +3,7 @@ import Networking
 
 protocol BreedsListInteracting {
     func fetchBreedsList()
-    func tappedOnListItem(breedName: String)
+    func tappedOnListItem(breed: BreedsList.BreedListItem)
 }
 
 final class BreedsListInteractor {
@@ -40,11 +40,11 @@ extension BreedsListInteractor: BreedsListInteracting {
         }
     }
     
-    func tappedOnListItem(breedName: String) {
+    func tappedOnListItem(breed: BreedsList.BreedListItem) {
         asyncTask.execute { [weak self] in
             guard let self else { return }
             
-            await presenter.presentBreedDetails(with: breedName)
+            await presenter.presentBreedDetails(for: breed)
         }
         
     }

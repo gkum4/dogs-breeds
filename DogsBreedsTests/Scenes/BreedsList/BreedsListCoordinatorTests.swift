@@ -25,7 +25,7 @@ struct BreedsListCoordinatorTests {
     func goToBreedDetails_ShouldShowViewController() {
         let args = makeSUT()
         
-        args.sut.goToBreedDetails(breedName: "Akita")
+        args.sut.goToBreedDetails(breed: .fixture())
         
         #expect(args.navigationControllerSpy.showCallCount == 1)
     }
