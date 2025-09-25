@@ -27,7 +27,7 @@ extension BreedsListPresenter: BreedsListPresenting {
     }
     
     func presentBreedsList(_ breedsList: [BreedsList.BreedListItem]) {
-        displayer?.displayBreedsList(breedsList)
+        displayer?.displayBreedsList(breedsList.sorted(by: { $0.name < $1.name }))
     }
     
     func presentErrorState(for error: Networking.ApiError) {
