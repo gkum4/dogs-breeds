@@ -5,6 +5,7 @@ protocol BreedsListPresenting {
     func stopLoading() async
     func presentBreedsList(_ breedsList: [BreedsList.BreedListItem]) async
     func presentErrorState(for error: ApiError) async
+    func presentBreedDetails(with breedName: String) async
 }
 
 final class BreedsListPresenter {
@@ -39,5 +40,9 @@ extension BreedsListPresenter: BreedsListPresenting {
             displayer?.displayError(title: "Ops, encontramos um problema",
                                     message: "Encontramos um problema ao buscar a lista de raças, tente novamente.")
         }
+    }
+    
+    func presentBreedDetails(with breedName: String) {
+        coordinator.goToBreedDetails(breedName: breedName)
     }
 }

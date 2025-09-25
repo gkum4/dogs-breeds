@@ -85,10 +85,7 @@ extension BreedsListViewController: UITableViewDataSource {
 
 extension BreedsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected \(breedsList[indexPath.row].name)")
+        let breedName = breedsList[indexPath.row].name
+        interactor.tappedOnListItem(breedName: breedName)
     }
-    
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        50
-//    }
 }
