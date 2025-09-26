@@ -1,13 +1,21 @@
 import Networking
 
-protocol BreedDetailsServicing {}
+protocol BreedDetailsServicing {
+    func fetchBreedDetails(for breedName: String) async -> ApiResult<BreedDetails>
+}
 
 final class BreedDetailsService {
-    private let api: ApiProtocol
+    typealias Dependencies = HasApi
+    private let dependencies: Dependencies
     
-    init(api: ApiProtocol = Api()) {
-        self.api = api
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 }
 
-extension BreedDetailsService: BreedDetailsServicing {}
+extension BreedDetailsService: BreedDetailsServicing {
+    func fetchBreedDetails(for breedName: String) async -> ApiResult<BreedDetails> {
+        let endpoint = BreedDetailsEndpoint.images(breedName: breedName)
+        return await dependencies.api.execute(endpoint: endpoint)
+    }
+}
