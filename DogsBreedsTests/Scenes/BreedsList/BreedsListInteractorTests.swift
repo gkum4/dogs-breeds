@@ -6,7 +6,7 @@ private final class BreedsListPresenterSpy: BreedsListPresenting {
     enum Message: Equatable {
         case startLoading
         case stopLoading
-        case presentBreedsList
+        case presentBreedsList(_ breedsList: [BreedsList.BreedListItem])
         case presentErrorState
         case presentBreedDetails
     }
@@ -22,7 +22,7 @@ private final class BreedsListPresenterSpy: BreedsListPresenting {
     }
     
     func presentBreedsList(_ breedsList: [DogsBreeds.BreedsList.BreedListItem]) async {
-        messages.append(.presentBreedsList)
+        messages.append(.presentBreedsList(breedsList))
     }
     
     func presentErrorState(for error: Networking.ApiError) async {
@@ -68,14 +68,15 @@ struct BreedsListInteractorTests {
     @Test
     func fetchBreedsList_WhenServiceSuccess_ShouldPresentBreedsList() async {
         let args = makeSUT()
-        args.serviceSpy.fetchBreedsListResult = .success(.fixture())
+        let breedsList = BreedsList.fixture()
+        args.serviceSpy.fetchBreedsListResult = .success(breedsList)
         
         args.sut.fetchBreedsList()
         await args.asyncTaskMock.executeAllTasks()
         
         #expect(args.presenterSpy.messages == [
             .startLoading,
-            .presentBreedsList,
+            .presentBreedsList(breedsList.breeds),
             .stopLoading
         ])
     }
@@ -103,6 +104,43 @@ struct BreedsListInteractorTests {
         await args.asyncTaskMock.executeAllTasks()
         
         #expect(args.presenterSpy.messages == [.presentBreedDetails])
+    }
+    
+    @Test
+    func searchBreedsList_WhenSearchTextEmpty_ShouldReturnPreviouslySearchedBreedsList() async {
+        let args = makeSUT()
+        let breedsList = BreedsList.fixture()
+        args.serviceSpy.fetchBreedsListResult = .success(breedsList)
+        
+        args.sut.fetchBreedsList()
+        await args.asyncTaskMock.executeAllTasks()
+        args.sut.searchBreedsList(with: "")
+        await args.asyncTaskMock.executeAllTasks()
+        
+        #expect(args.presenterSpy.messages.last == .presentBreedsList(breedsList.breeds))
+    }
+    
+    @Test
+    func searchBreedsList_ShouldFilterPreviouslyFetchedBreedsListByName() async {
+        let args = makeSUT()
+        let breedsList = BreedsList.fixture(breeds: [
+            .fixture(name: "akita"),
+            .fixture(name: "German"),
+            .fixture(name: "Pug"),
+            .fixture(name: "puggle")
+        ])
+        args.serviceSpy.fetchBreedsListResult = .success(breedsList)
+        
+        args.sut.fetchBreedsList()
+        await args.asyncTaskMock.executeAllTasks()
+        args.sut.searchBreedsList(with: "pug")
+        await args.asyncTaskMock.executeAllTasks()
+        
+        let expectedFilterdBreedsList: [BreedsList.BreedListItem] = [
+            .fixture(name: "Pug"),
+            .fixture(name: "puggle")
+        ]
+        #expect(args.presenterSpy.messages.last == .presentBreedsList(expectedFilterdBreedsList))
     }
 }
 
