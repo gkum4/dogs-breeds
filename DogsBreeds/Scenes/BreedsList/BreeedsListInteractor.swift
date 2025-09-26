@@ -7,22 +7,24 @@ protocol BreedsListInteracting {
 }
 
 final class BreedsListInteractor {
+    typealias Dependencies = HasAsyncTask
     private let presenter: BreedsListPresenting
     private let service: BreedsListServicing
-    private let asyncTask: AsyncTaskProtocol
+    private let dependencies: Dependencies
+    
     
     init(presenter: BreedsListPresenting,
          service: BreedsListServicing,
-         asyncTask: AsyncTaskProtocol = AsyncTask()) {
+         dependencies: Dependencies) {
         self.presenter = presenter
         self.service = service
-        self.asyncTask = asyncTask
+        self.dependencies = dependencies
     }
 }
 
 extension BreedsListInteractor: BreedsListInteracting {
     func fetchBreedsList() {
-        asyncTask.execute { [weak self] in
+        dependencies.asyncTask.execute { [weak self] in
             guard let self else { return }
             
             await presenter.startLoading()
@@ -41,7 +43,7 @@ extension BreedsListInteractor: BreedsListInteracting {
     }
     
     func tappedOnListItem(breed: BreedsList.BreedListItem) {
-        asyncTask.execute { [weak self] in
+        dependencies.asyncTask.execute { [weak self] in
             guard let self else { return }
             
             await presenter.presentBreedDetails(for: breed)

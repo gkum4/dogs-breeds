@@ -6,15 +6,16 @@ protocol BreedsListServicing {
 }
 
 final class BreedsListService {
-    private let api: ApiProtocol
+    typealias Dependencies = HasApi
+    private let dependencies: Dependencies
     
-    init(api: ApiProtocol = Api()) {
-        self.api = api
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 }
 
 extension BreedsListService: BreedsListServicing {
     func fetchBreedsList() async -> ApiResult<BreedsList> {
-        return await api.execute(endpoint: BreedsListEndpoint.listAll)
+        return await dependencies.api.execute(endpoint: BreedsListEndpoint.listAll)
     }
 }

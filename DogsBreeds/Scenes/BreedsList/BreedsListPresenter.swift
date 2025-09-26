@@ -34,11 +34,9 @@ extension BreedsListPresenter: BreedsListPresenting {
     func presentErrorState(for error: Networking.ApiError) {
         switch error {
         case .noConnection:
-            displayer?.displayError(title: "Ops, sem internet",
-                                    message: "Verifique sua conexão e tente novamente.")
+            displayer?.displayError(.makeNoConnection())
         default:
-            displayer?.displayError(title: "Ops, encontramos um problema",
-                                    message: "Encontramos um problema ao buscar a lista de raças, tente novamente.")
+            displayer?.displayError(.makeGeneric())
         }
     }
     

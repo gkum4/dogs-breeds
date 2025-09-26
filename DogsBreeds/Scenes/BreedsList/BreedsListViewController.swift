@@ -4,7 +4,7 @@ protocol BreedsListDisplaying: AnyObject {
     func displayLoading()
     func hideLoading()
     func displayBreedsList(_ breedsList: [BreedsList.BreedListItem])
-    func displayError(title: String, message: String)
+    func displayError(_ viewModel: ErrorViewModel)
 }
 
 final class BreedsListViewController: UIViewController {
@@ -34,6 +34,7 @@ final class BreedsListViewController: UIViewController {
         super.viewDidLoad()
         buildViewHierarchy()
         setupConstraints()
+        setupView()
         interactor.fetchBreedsList()
     }
 }
@@ -51,19 +52,29 @@ private extension BreedsListViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+    
+    func setupView() {
+        view.backgroundColor = .systemBackground
+    }
 }
 
 extension BreedsListViewController: BreedsListDisplaying {
-    func displayLoading() {}
+    func displayLoading() {
+        showLoadingScreen()
+    }
     
-    func hideLoading() {}
+    func hideLoading() {
+        hideLoadingScreen()
+    }
     
     func displayBreedsList(_ breedsList: [BreedsList.BreedListItem]) {
         self.breedsList = breedsList
         tableView.reloadData()
     }
     
-    func displayError(title: String, message: String) {}
+    func displayError(_ viewModel: ErrorViewModel) {
+        showErrorView(delegate: self, viewModel: viewModel)
+    }
 }
 
 extension BreedsListViewController: UITableViewDataSource {
@@ -87,5 +98,12 @@ extension BreedsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let breed = breedsList[indexPath.row]
         interactor.tappedOnListItem(breed: breed)
+    }
+}
+
+extension BreedsListViewController: ErrorViewDelegate {
+    func errorViewButtonTapped() {
+        hideErrorView()
+        interactor.fetchBreedsList()
     }
 }
