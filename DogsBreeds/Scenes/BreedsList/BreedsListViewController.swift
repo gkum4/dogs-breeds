@@ -12,6 +12,21 @@ final class BreedsListViewController: UIViewController {
     
     private var breedsList: [BreedsList.BreedListItem] = []
     
+    private var searchTimer: Timer?
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        searchBar.barStyle = .default
+        searchBar.placeholder = "Find the dog breed"
+        searchBar.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: view.frame.width,
+                                 height: 44)
+        return searchBar
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
@@ -55,6 +70,8 @@ private extension BreedsListViewController {
     
     func setupView() {
         view.backgroundColor = .systemBackground
+        navigationItem.titleView = searchBar
+        setupDismissKeyboardWhenTappedOutside()
     }
 }
 
@@ -98,6 +115,58 @@ extension BreedsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let breed = breedsList[indexPath.row]
         interactor.tappedOnListItem(breed: breed)
+    }
+}
+
+extension BreedsListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchTimer?.invalidate()
+        
+        searchTimer = .scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+            guard let self else { return }
+            
+            interactor.searchBreedsList(with: searchText)
+        }
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        tableView.isUserInteractionEnabled = false
+        
+        UIView.animate(withDuration: 0.3) {
+            self.tableView.alpha = 0.3
+            self.tableView.transform = CGAffineTransform.identity.scaledBy(x: 0.99, y: 0.99)
+        }
+        
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        UIView.animate(withDuration: 0.3) {
+            self.tableView.alpha = 1
+            self.tableView.transform = .identity
+        } completion: { _ in
+            self.tableView.isUserInteractionEnabled = true
+        }
+        
+        endSearchBarEditing()
+        
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        endSearchBarEditing()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        endSearchBarEditing()
+    }
+    
+    private func endSearchBarEditing() {
+        searchBar.resignFirstResponder()
+    }
+    
+    @objc override func dismissKeyboard() {
+        searchBar.endEditing(true)
     }
 }
 

@@ -4,6 +4,7 @@ import Networking
 protocol BreedsListInteracting {
     func fetchBreedsList()
     func tappedOnListItem(breed: BreedsList.BreedListItem)
+    func searchBreedsList(with searchText: String)
 }
 
 final class BreedsListInteractor {
@@ -11,7 +12,7 @@ final class BreedsListInteractor {
     private let presenter: BreedsListPresenting
     private let service: BreedsListServicing
     private let dependencies: Dependencies
-    
+    private var breedsList: [BreedsList.BreedListItem] = []
     
     init(presenter: BreedsListPresenting,
          service: BreedsListServicing,
@@ -33,7 +34,7 @@ extension BreedsListInteractor: BreedsListInteracting {
             
             switch result {
             case .success(let breedsList):
-                await presenter.presentBreedsList(breedsList.breeds)
+                await handleFetchBreedsListSuccess(breedsList)
             case .failure(let error):
                 await presenter.presentErrorState(for: error)
             }
@@ -48,6 +49,37 @@ extension BreedsListInteractor: BreedsListInteracting {
             
             await presenter.presentBreedDetails(for: breed)
         }
+    }
+    
+    func searchBreedsList(with searchText: String) {
+        guard !searchText.isEmpty else {
+            showPreviousFetchedBreedsList()
+            return
+        }
         
+        let filteredList = breedsList.filter { breedItem in
+            breedItem.name.lowercased().contains(searchText.lowercased())
+        }
+        
+        dependencies.asyncTask.execute { [weak self] in
+            guard let self else { return }
+            
+            await presenter.presentBreedsList(filteredList)
+        }
+    }
+}
+
+private extension BreedsListInteractor {
+    func handleFetchBreedsListSuccess(_ breedsList: BreedsList) async {
+        self.breedsList = breedsList.breeds
+        await presenter.presentBreedsList(breedsList.breeds)
+    }
+    
+    func showPreviousFetchedBreedsList() {
+        dependencies.asyncTask.execute { [weak self] in
+            guard let self else { return }
+            
+            await presenter.presentBreedsList(breedsList)
+        }
     }
 }
