@@ -1,6 +1,12 @@
 # Dogs Breeds iOS App
 App that uses the [Dog API](https://dog.ceo/dog-api/documentation/) to display a dog's breeds list and also a dog's breed photo list.
 
+## Features
+- View dogs breeds list.
+- Search in breeds list by name.
+- Error screen that allows for reloading.
+- View dogs breed pictures and sub-breeds.
+
 ## Examples
 | Use example | Connection Error Example |
 | ----------- | ------------------------ |
