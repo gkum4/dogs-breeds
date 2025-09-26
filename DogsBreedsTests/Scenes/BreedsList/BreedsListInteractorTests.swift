@@ -56,9 +56,10 @@ private extension BreedsListInteractorTests {
         let presenterSpy = BreedsListPresenterSpy()
         let serviceSpy = BreedsListServiceSpy()
         let asyncTaskMock = AsyncTaskMock()
+        let dependencyContainerMock = DependencyContainerMock(asyncTask: asyncTaskMock)
         let sut = BreedsListInteractor(presenter: presenterSpy,
                                        service: serviceSpy,
-                                       asyncTask: asyncTaskMock)
+                                       dependencies: dependencyContainerMock)
         return (presenterSpy, serviceSpy, asyncTaskMock, sut)
     }
 }

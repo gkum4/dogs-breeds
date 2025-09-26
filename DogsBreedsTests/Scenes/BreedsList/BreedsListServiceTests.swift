@@ -10,7 +10,8 @@ private extension BreedsListServiceTests {
     
     func makeSUT() -> DependencySUT {
         let apiSpy = ApiSpy()
-        let sut = BreedsListService(api: apiSpy)
+        let dependencyContainerMock = DependencyContainerMock(api: apiSpy)
+        let sut = BreedsListService(dependencies: dependencyContainerMock)
         return (apiSpy, sut)
     }
 }

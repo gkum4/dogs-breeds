@@ -18,7 +18,7 @@ private final class BreedsListDisplayerSpy: BreedsListDisplaying {
         case displayLoading
         case hideLoading
         case displayBreedsList(_ breedsList: [DogsBreeds.BreedsList.BreedListItem])
-        case displayError(title: String, message: String)
+        case displayError(_ viewModel: ErrorViewModel)
     }
     
     private(set) var messages: [Message] = []
@@ -35,8 +35,8 @@ private final class BreedsListDisplayerSpy: BreedsListDisplaying {
         messages.append(.displayBreedsList(breedsList))
     }
     
-    func displayError(title: String, message: String) {
-        messages.append(.displayError(title: title, message: message))
+    func displayError(_ viewModel: DogsBreeds.ErrorViewModel) {
+        messages.append(.displayError(viewModel))
     }
 }
 
