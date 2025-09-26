@@ -79,6 +79,13 @@
             ReferencedContainer = "container:DogsBreeds.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DOG_BASE_URL"
+            value = "https://dog.ceo/api"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
