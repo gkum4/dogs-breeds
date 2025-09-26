@@ -1,3 +1,7 @@
+protocol HasAsyncTask {
+    var asyncTask: AsyncTaskProtocol { get }
+}
+
 protocol AsyncTaskProtocol {
     func execute(_ code: @escaping () async -> Void)
 }

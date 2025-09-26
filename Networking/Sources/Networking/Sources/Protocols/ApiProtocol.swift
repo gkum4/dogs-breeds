@@ -1,5 +1,9 @@
 import Foundation
 
+public protocol HasApi {
+    var api: ApiProtocol { get }
+}
+
 public protocol ApiProtocol {
     func execute<T: Decodable>(endpoint: ApiEndpointProtocol,
                                decoder: JSONDecoder) async -> Result<T, ApiError>
